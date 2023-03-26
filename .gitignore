@@ -1,0 +1,5 @@
+*.png
+_make_dataset.py
+__pycache__
+*.pkl
+images
