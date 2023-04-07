@@ -11,10 +11,15 @@ class Dataset:
     def __init__(self):
         # dir = os.path.dirname(__file__)
         self.data_dir = './images/'
-        self.label_num_dic = {0 : 'kirimi', 1 : 'other'}
+        self.label_num_dic = {0 : 'RBC', 1 : 'WBC'}
+        # self.label_num_dic = {0 : 'kirimi', 1 : 'other'}
         self.img_size = 50
         self.pkl_file = "./dataset.pkl"
-        
+
+    def preproccess(self, path, img_size):    
+        img_array = cv2.imread(path, cv2.IMREAD_GRAYSCALE)  # load images
+        img_resize_array = cv2.resize(img_array, img_size)  # resize images
+        return img_resize_array
 
     def create_dataset(self):
         _dataset = {}
@@ -25,8 +30,7 @@ class Dataset:
         for path in img_path:
             label = int(os.path.dirname(path).split('/')[-1])
             try:
-                    img_array = cv2.imread(path, cv2.IMREAD_GRAYSCALE)  # load images
-                    img_resize_array = cv2.resize(img_array, img_size)  # resize images
+                    img_resize_array = self.preproccess(path, img_size)
                     _dataset_x.append(img_resize_array)
                     _dataset_t.append(label)
             except Exception as e:
@@ -96,6 +100,7 @@ class Dataset:
             plt.imshow(self.dataset['train_image'][i], cmap='gray')
 
         plt.show()
+        plt.savefig('dataset.png')
 
 if __name__ == '__main__':
     cls = Dataset()

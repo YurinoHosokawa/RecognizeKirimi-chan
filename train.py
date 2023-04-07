@@ -18,7 +18,7 @@ hidden_size = 1
 output_size = len(ds.label_num_dic)
 
 nw = TwoLayerNet(input_size, hidden_size, output_size)
-
+print('SDG...')
 h = 1e-4
 for j in tqdm(range(100)):
     grad = {}
